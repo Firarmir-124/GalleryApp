@@ -2,6 +2,9 @@ import React from 'react';
 import {AppBar, Grid, Toolbar, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import AnonymousMenu from "./AnonymousMenu/AnonymousMenu";
+import UserMenu from "./UserMenu/UserMenu";
+import {useAppSelector} from "../../app/hooks";
+import {selectUser} from "../../store/userSlice";
 
 interface Props {
   children: React.ReactNode
@@ -13,6 +16,7 @@ export const linksStyle:React.CSSProperties = {
 };
 
 const Layout:React.FC<Props> = ({children}) => {
+  const user = useAppSelector(selectUser);
 
   return (
     <>
@@ -22,7 +26,9 @@ const Layout:React.FC<Props> = ({children}) => {
             Сайт
           </Typography>
           <Grid item>
-            <AnonymousMenu/>
+            {user ? (
+              <UserMenu user={user}/>
+            ) : <AnonymousMenu/>}
           </Grid>
         </Toolbar>
       </AppBar>
