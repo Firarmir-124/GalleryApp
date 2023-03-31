@@ -4,13 +4,10 @@ import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-import {persistor, store} from "./app/store";
 import {PersistGate} from "redux-persist/integration/react";
 import {GoogleOAuthProvider} from "@react-oauth/google";
 import {GOOGLE_CLIENT_ID} from "./constans";
-import {addInterceptors} from "./axiosApi";
-
-addInterceptors(store);
+import {persistor, store} from "./app/store";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
