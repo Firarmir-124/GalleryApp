@@ -1,8 +1,12 @@
 import React from 'react';
+import {Route, Routes} from "react-router-dom";
+import Register from "./containers/Register/Register";
 
 function App() {
   return (
-    <div>fff</div>
+    <Routes>
+      <Route path='register' element={<Register/>}/>
+    </Routes>
   );
 }
 
