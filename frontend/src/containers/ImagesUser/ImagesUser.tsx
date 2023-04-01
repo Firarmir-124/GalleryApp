@@ -5,7 +5,7 @@ import CardImage from "../../components/CardImage/CardImage";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {selectGetImageLoading, selectImages} from "../../store/imageSlice";
 import {getImages, removeImage} from "../../store/imageThunk";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {selectUser} from "../../store/userSlice";
 
 const ImagesUser = () => {
@@ -14,7 +14,6 @@ const ImagesUser = () => {
   const images = useAppSelector(selectImages);
   const loading = useAppSelector(selectGetImageLoading);
   const [nameAuthor, setNameAuthor] = useState('');
-  const navigate = useNavigate();
   const user = useAppSelector(selectUser);
 
   useEffect(() => {
@@ -29,9 +28,11 @@ const ImagesUser = () => {
     }
   }, [dispatch, id]);
 
-  const removeImageOne = async (id: string) => {
-    await dispatch(removeImage(id)).unwrap();
-    navigate('/');
+  const removeImageOne = async (id_img: string) => {
+    await dispatch(removeImage(id_img)).unwrap();
+    if (id) {
+      await dispatch(getImages(id));
+    }
   };
 
   return (
