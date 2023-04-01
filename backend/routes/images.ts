@@ -4,7 +4,6 @@ import {User} from "../models/User";
 import auth from "../middleware/auth";
 import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
-import authAnonymous from "../middleware/authAnonymous";
 
 const imagesRouter = express.Router();
 
@@ -45,7 +44,7 @@ imagesRouter.post('/', auth, imagesUpload.single('image'), async (req, res, next
   }
 });
 
-imagesRouter.delete('/:id', authAnonymous, async (req, res) => {
+imagesRouter.delete('/:id', auth, async (req, res) => {
   const token = req.get('Authorization');
 
   try {
