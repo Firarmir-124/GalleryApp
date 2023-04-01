@@ -5,12 +5,14 @@ import Login from "./containers/Login/Login";
 import {Alert} from "@mui/material";
 import Home from "./containers/Home/Home";
 import ImagesUser from "./containers/ImagesUser/ImagesUser";
+import CreateImage from "./containers/CreateImage/CreateImage";
 
 function App() {
   return (
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='imagesUser/:id' element={<ImagesUser/>}/>
+      <Route path='createImage' element={<CreateImage/>}/>
       <Route path='register' element={<Register/>}/>
       <Route path='login' element={<Login/>}/>
       <Route path='/*' element={<Alert severity='info'>Такой страницы нет !</Alert>}/>
