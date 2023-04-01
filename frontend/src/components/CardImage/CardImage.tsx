@@ -65,15 +65,19 @@ const CardImage:React.FC<Props> = ({image}) => {
               sx={{fontSize: '20px', width: '100%'}}
               onClick={() => setOpen(true)}
             />
-            <Chip
-              component={Link}
-              style={linksStyle} to={'/imagesUser/' + image.user._id}
-              icon={<FaceIcon />}
-              label={image.user.displayName}
-              variant="outlined"
-              color="info"
-              sx={{fontSize: '20px', cursor: 'pointer', mt: '10px'}}
-            />
+            {
+              image.user.displayName ? (
+                <Chip
+                  component={Link}
+                  style={linksStyle} to={'/imagesUser/' + image.user._id}
+                  icon={<FaceIcon />}
+                  label={image.user.displayName}
+                  variant="outlined"
+                  color="info"
+                  sx={{fontSize: '20px', cursor: 'pointer', mt: '10px'}}
+                />
+              ) : null
+            }
           </CardContent>
           <CardActions>
             <Paper elevation={2}>
