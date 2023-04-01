@@ -4,8 +4,8 @@ import {Alert, Box, Button, Chip, CircularProgress, Container, Grid, Paper} from
 import CardImage from "../../components/CardImage/CardImage";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {selectGetImageLoading, selectImages} from "../../store/imageSlice";
-import {getImages} from "../../store/imageThunk";
-import {Link, useParams} from "react-router-dom";
+import {getImages, removeImage} from "../../store/imageThunk";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {selectUser} from "../../store/userSlice";
 
 const ImagesUser = () => {
@@ -14,6 +14,7 @@ const ImagesUser = () => {
   const images = useAppSelector(selectImages);
   const loading = useAppSelector(selectGetImageLoading);
   const [nameAuthor, setNameAuthor] = useState('');
+  const navigate = useNavigate();
   const user = useAppSelector(selectUser);
 
   useEffect(() => {
@@ -28,6 +29,10 @@ const ImagesUser = () => {
     }
   }, [dispatch, id]);
 
+  const removeImageOne = async (id: string) => {
+    await dispatch(removeImage(id)).unwrap();
+    navigate('/');
+  };
 
   return (
     <Layout>
@@ -56,7 +61,11 @@ const ImagesUser = () => {
               !loading ? (
                 images.length !== 0 ? (
                   images.map((image) => (
-                    <CardImage key={image._id} image={image}/>
+                    <CardImage
+                      key={image._id}
+                      image={image}
+                      removeImageOne={() => removeImageOne(image._id)}
+                    />
                   ))
                 ) : <Grid item><Alert severity='info'>В данный момент картинок нет !</Alert></Grid>
               ) : <Grid item><CircularProgress/></Grid>

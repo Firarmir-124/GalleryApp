@@ -20,9 +20,10 @@ import {selectUser} from "../../store/userSlice";
 
 interface Props {
   image: ImagesType;
+  removeImageOne?: React.MouseEventHandler;
 }
 
-const CardImage:React.FC<Props> = ({image}) => {
+const CardImage:React.FC<Props> = ({image, removeImageOne}) => {
   const [open, setOpen] = useState(false);
   let removeBtn:React.ReactNode | null = null;
   const loadingRemove = useAppSelector(selectImageRemoveLoading);
@@ -31,7 +32,7 @@ const CardImage:React.FC<Props> = ({image}) => {
   switch (user?.role) {
     case 'admin':
       removeBtn = (
-        <IconButton disabled={loadingRemove} color='warning' aria-label="delete">
+        <IconButton onClick={removeImageOne} disabled={loadingRemove} color='warning' aria-label="delete">
           {!loadingRemove ? <DeleteIcon /> : <CircularProgress/>}
         </IconButton>
       )
@@ -39,7 +40,7 @@ const CardImage:React.FC<Props> = ({image}) => {
     case 'user':
       if (user?._id === image.user._id) {
         removeBtn = (
-          <IconButton disabled={loadingRemove} color='warning' aria-label="delete">
+          <IconButton onClick={removeImageOne} disabled={loadingRemove} color='warning' aria-label="delete">
             {!loadingRemove ? <DeleteIcon /> : <CircularProgress/>}
           </IconButton>
         )
