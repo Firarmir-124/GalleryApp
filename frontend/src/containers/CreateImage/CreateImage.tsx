@@ -3,11 +3,13 @@ import Layout from "../../components/Layout/Layout";
 import {Chip, Container, Paper} from "@mui/material";
 import Form from "../../components/Form/Form";
 import {ImagesMutation} from "../../types";
-import {useAppDispatch} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {createImage} from "../../store/imageThunk";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
+import {selectUser} from "../../store/userSlice";
 
 const CreateImage = () => {
+  const user = useAppSelector(selectUser);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -15,6 +17,10 @@ const CreateImage = () => {
     await dispatch(createImage(image)).unwrap();
     navigate('/');
   };
+
+  if (!user) {
+    return <Navigate to='/login'/>
+  }
 
   return (
     <Layout>
