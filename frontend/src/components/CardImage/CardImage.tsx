@@ -1,27 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ImagesType} from "../../types";
 import {
   Card,
   CardMedia,
   Grid,
   CardContent,
-  Typography,
   CardActions,
   Paper,
   IconButton,
-  CircularProgress
+  CircularProgress, Dialog, DialogContent, DialogActions, Button, Chip
 } from "@mui/material";
 import {apiURl} from "../../constans";
 import {useAppSelector} from "../../app/hooks";
 import {selectUser} from "../../store/userSlice";
 import {selectImageRemoveLoading} from "../../store/imageSlice";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {Link} from "react-router-dom";
+import {linksStyle} from "../Layout/Layout";
+import FaceIcon from '@mui/icons-material/Face';
 
 interface Props {
   image: ImagesType;
 }
 
 const CardImage:React.FC<Props> = ({image}) => {
+  const [open, setOpen] = useState(false);
   const user = useAppSelector(selectUser);
   let removeBtn:React.ReactNode | null = null;
   const loadingRemove = useAppSelector(selectImageRemoveLoading);
@@ -53,21 +56,24 @@ const CardImage:React.FC<Props> = ({image}) => {
             sx={{ height: 200 }}
             image={apiURl + '/' + image.image}
             title="green iguana"
+            onClick={() => setOpen(true)}
           />
           <CardContent>
-            <Grid container justifyContent='space-between' alignItems='center'>
-              <Grid item>
-                <Typography gutterBottom variant="h5" component="h3" align="center">
-                  {image.title}
-                </Typography>
-              </Grid>
-
-              <Grid item>
-                <Typography gutterBottom variant="h5" component="h3" align="center">
-                  {image.user.displayName}
-                </Typography>
-              </Grid>
-            </Grid>
+            <Chip
+              label={image.title}
+              color="info"
+              sx={{fontSize: '20px', width: '100%'}}
+              onClick={() => setOpen(true)}
+            />
+            <Chip
+              component={Link}
+              style={linksStyle} to={'/imagesUser/' + image.user._id}
+              icon={<FaceIcon />}
+              label={image.user.displayName}
+              variant="outlined"
+              color="info"
+              sx={{fontSize: '20px', cursor: 'pointer', mt: '10px'}}
+            />
           </CardContent>
           <CardActions>
             <Paper elevation={2}>
@@ -76,6 +82,24 @@ const CardImage:React.FC<Props> = ({image}) => {
           </CardActions>
         </Card>
       </Grid>
+
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <CardMedia
+            sx={{ height: '500px', width: '500px' }}
+            image={apiURl + '/' + image.image}
+            title="green iguana"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
