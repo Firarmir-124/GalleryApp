@@ -44,7 +44,7 @@ export interface ImagesType {
   user: {
     _id: string;
     displayName: string;
-  };
+  }
   title: string;
   image: string;
 }

@@ -7,17 +7,16 @@ import {
   CardContent,
   CardActions,
   Paper,
-  IconButton,
-  CircularProgress, Dialog, DialogContent, DialogActions, Button, Chip
+  Dialog, DialogContent, DialogActions, Button, Chip, IconButton, CircularProgress
 } from "@mui/material";
 import {apiURl} from "../../constans";
-import {useAppSelector} from "../../app/hooks";
-import {selectUser} from "../../store/userSlice";
-import {selectImageRemoveLoading} from "../../store/imageSlice";
-import DeleteIcon from '@mui/icons-material/Delete';
 import {Link} from "react-router-dom";
 import {linksStyle} from "../Layout/Layout";
 import FaceIcon from '@mui/icons-material/Face';
+import DeleteIcon from "@mui/icons-material/Delete";
+import {useAppSelector} from "../../app/hooks";
+import {selectImageRemoveLoading} from "../../store/imageSlice";
+import {selectUser} from "../../store/userSlice";
 
 interface Props {
   image: ImagesType;
@@ -25,9 +24,9 @@ interface Props {
 
 const CardImage:React.FC<Props> = ({image}) => {
   const [open, setOpen] = useState(false);
-  const user = useAppSelector(selectUser);
   let removeBtn:React.ReactNode | null = null;
   const loadingRemove = useAppSelector(selectImageRemoveLoading);
+  const user = useAppSelector(selectUser);
 
   switch (user?.role) {
     case 'admin':
@@ -81,7 +80,11 @@ const CardImage:React.FC<Props> = ({image}) => {
           </CardContent>
           <CardActions>
             <Paper elevation={2}>
-              {removeBtn}
+              {
+                !image.user.displayName ? (
+                  removeBtn
+                ) : null
+              }
             </Paper>
           </CardActions>
         </Card>

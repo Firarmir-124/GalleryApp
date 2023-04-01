@@ -11,7 +11,7 @@ const imagesRouter = express.Router();
 imagesRouter.get('/', async (req, res) => {
   try {
     if (req.query.imagesUser !== undefined) {
-      const images = await Image.find({user: req.query.imagesUser});
+      const images = await Image.find({user: req.query.imagesUser}).populate('user', '_id');
       return res.send(images);
     } else {
       const images = await Image.find().populate('user', 'displayName');
