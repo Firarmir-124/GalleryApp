@@ -38,3 +38,18 @@ export interface ValidationError {
 export interface GlobalError {
   error: string;
 }
+
+export interface ImagesType {
+  _id: string;
+  user: {
+    _id: string;
+    displayName: string;
+  };
+  title: string;
+  image: string;
+}
+
+export interface ImagesMutation {
+  title: string;
+  image: File | null;
+}
