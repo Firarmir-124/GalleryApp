@@ -4,6 +4,7 @@ import {User} from "../../../types";
 import {useAppDispatch} from "../../../app/hooks";
 import {logout} from "../../../store/userThunk";
 import {apiURl} from "../../../constans";
+import {Link} from "react-router-dom";
 
 interface Props {
   user: User
@@ -46,6 +47,8 @@ const UserMenu:React.FC<Props> = ({user}) => {
         onClose={handleClose}
       >
         <MenuItem onClick={handleLogout}>Выйти из аккаунта</MenuItem>
+        <MenuItem component={Link} to='/createImage'>Создать картинку</MenuItem>
+        <MenuItem component={Link} to={'/imagesUser/' + user._id}>Мои картинки</MenuItem>
       </Menu>
     </>
   );
