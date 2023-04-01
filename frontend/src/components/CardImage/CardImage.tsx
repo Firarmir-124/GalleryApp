@@ -20,7 +20,7 @@ import {selectUser} from "../../store/userSlice";
 
 interface Props {
   image: ImagesType;
-  removeImageOne?: React.MouseEventHandler;
+  removeImageOne: React.MouseEventHandler;
 }
 
 const CardImage:React.FC<Props> = ({image, removeImageOne}) => {
@@ -38,12 +38,14 @@ const CardImage:React.FC<Props> = ({image, removeImageOne}) => {
       )
       break;
     case 'user':
-      if (user?._id === image.user._id) {
-        removeBtn = (
-          <IconButton onClick={removeImageOne} disabled={loadingRemove} color='warning' aria-label="delete">
-            {!loadingRemove ? <DeleteIcon /> : <CircularProgress/>}
-          </IconButton>
-        )
+      if (!image.user.displayName) {
+        if (user?._id === image.user._id) {
+          removeBtn = (
+            <IconButton onClick={removeImageOne} disabled={loadingRemove} color='warning' aria-label="delete">
+              {!loadingRemove ? <DeleteIcon /> : <CircularProgress/>}
+            </IconButton>
+          )
+        }
       }
       break;
   }
@@ -81,11 +83,7 @@ const CardImage:React.FC<Props> = ({image, removeImageOne}) => {
           </CardContent>
           <CardActions>
             <Paper elevation={2}>
-              {
-                !image.user.displayName ? (
-                  removeBtn
-                ) : null
-              }
+              {removeBtn}
             </Paper>
           </CardActions>
         </Card>

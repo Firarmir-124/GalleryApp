@@ -4,7 +4,7 @@ import {Alert, Chip, CircularProgress, Container, Grid, Paper} from "@mui/materi
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {selectGetImageLoading, selectImages} from "../../store/imageSlice";
 import CardImage from "../../components/CardImage/CardImage";
-import {getImages} from "../../store/imageThunk";
+import {getImages, removeImage} from "../../store/imageThunk";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +14,11 @@ const Home = () => {
   useEffect(() => {
     dispatch(getImages());
   }, [dispatch]);
+
+  const removeImageOne = async (id: string) => {
+    await dispatch(removeImage(id)).unwrap();
+    await dispatch(getImages());
+  };
 
   return (
     <Layout>
@@ -30,7 +35,7 @@ const Home = () => {
               !loading ? (
                 images.length !== 0 ? (
                   images.map((image) => (
-                    <CardImage key={image._id} image={image}/>
+                    <CardImage removeImageOne={() => removeImageOne(image._id)} key={image._id} image={image}/>
                   ))
                 ) : <Grid item><Alert severity='info'>В данный момент картинок нет !</Alert></Grid>
               ) : <Grid item><CircularProgress/></Grid>
