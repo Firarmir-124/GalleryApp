@@ -13,7 +13,7 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.use('/users', usersRouter);
-app.use('/images', imagesRouter);
+app.use('/photo', imagesRouter);
 
 const run = async () => {
   mongoose.set('strictQuery', false);

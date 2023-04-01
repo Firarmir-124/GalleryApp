@@ -6,7 +6,7 @@ import {isAxiosError} from "axios";
 export const getImages = createAsyncThunk<ImagesType[], string | undefined>(
   'image/get_images',
   async (query) => {
-    const response = await axiosApi.get<ImagesType[]>(query ? '/images?imagesUser=' + query : '/images');
+    const response = await axiosApi.get<ImagesType[]>(query ? '/photo?imagesUser=' + query : '/photo');
     return response.data;
   }
 );
@@ -26,7 +26,7 @@ export const createImage = createAsyncThunk<void, ImagesMutation, {rejectValue: 
     });
 
     try {
-      await axiosApi.post<ImagesMutation>('/images', formData);
+      await axiosApi.post<ImagesMutation>('/photo', formData);
     } catch (e) {
       if (isAxiosError(e) && e.response && e.response.status === 400) {
         return rejectWithValue(e.response.data as ValidationError);
@@ -38,6 +38,6 @@ export const createImage = createAsyncThunk<void, ImagesMutation, {rejectValue: 
 export const removeImage = createAsyncThunk<void, string>(
   'image/remove_image',
   async (id) => {
-    await axiosApi.delete('/images/' + id);
+    await axiosApi.delete('/photo/' + id);
   }
 );
