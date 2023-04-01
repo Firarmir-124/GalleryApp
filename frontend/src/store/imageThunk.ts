@@ -34,3 +34,10 @@ export const createImage = createAsyncThunk<void, ImagesMutation, {rejectValue: 
     }
   }
 );
+
+export const removeImage = createAsyncThunk<void, string>(
+  'image/remove_image',
+  async (id) => {
+    await axiosApi.delete('/images/' + id);
+  }
+);
