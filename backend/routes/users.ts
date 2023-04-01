@@ -23,8 +23,7 @@ usersRouter.post('/', imagesUpload.single('avatar'), async (req, res, next) => {
     user.generateToken();
     await user.save();
 
-    return res.send({message: 'Registered successfully!', user})
-
+    return res.send({message: 'Registered successfully!', user});
   } catch (error) {
     if (error instanceof mongoose.Error.ValidationError) {
       return res.status(400).send(error);
@@ -48,7 +47,7 @@ usersRouter.post('/sessions', async (req, res, next) => {
       return res.status(400).send({error: 'Username or password incorrect'});
     }
 
-    user.generateToken()
+    user.generateToken();
     await user.save();
 
     return res.send({message: 'Username and password correct!', user});
@@ -78,7 +77,7 @@ usersRouter.post('/google', async (req, res, next) => {
     const avatar = payload["picture"];
 
     if (!email) {
-      return res.status(400).send({error: "Not enough user data"})
+      return res.status(400).send({error: "Not enough user data"});
     }
 
     let user = await User.findOne({googleId});
