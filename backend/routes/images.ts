@@ -14,7 +14,7 @@ imagesRouter.get('/', async (req, res) => {
       const images = await Image.find({user: req.query.imagesUser});
       return res.send(images);
     } else {
-      const images = await Image.find();
+      const images = await Image.find().populate('user', 'displayName');
       return res.send(images);
     }
 

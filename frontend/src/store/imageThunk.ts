@@ -3,7 +3,7 @@ import axiosApi from "../axiosApi";
 import {ImagesMutation, ImagesType, ValidationError} from "../types";
 import {isAxiosError} from "axios";
 
-export const getImages = createAsyncThunk<ImagesType[], string>(
+export const getImages = createAsyncThunk<ImagesType[], string | undefined>(
   'image/get_images',
   async (query) => {
     const response = await axiosApi.get<ImagesType[]>(query ? '/images?imagesUser=' + query : '/images');
